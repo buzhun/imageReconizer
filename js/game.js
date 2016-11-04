@@ -1,3 +1,4 @@
+
     var stage = 'playing'
     var origin = {};
     var config = {};
