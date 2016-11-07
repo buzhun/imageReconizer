@@ -23,7 +23,7 @@ js识别canvas画布上绘制的图形
    * 支持图形学习，实现简单。
    * 样例图形间相似度高时，匹配不准确。
 
-# $1 Unistroke Recognize使用方法：
+## $1 Unistroke Recognize使用方法：
 
 ```markdown
 <script>
