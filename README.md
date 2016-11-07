@@ -7,7 +7,7 @@ js识别canvas画布上绘制的图形
 * 根据数学边角关系计算
 * 匹配和绘制。
 
-# 特点：
+特点：
   * 准确度高，支持判断canvas画布上绘制出来的图形是否是三角形，矩形，横线，竖线，对勾等。
   * 对复杂图形的匹配，计算上很麻烦。
 
@@ -19,23 +19,21 @@ js识别canvas画布上绘制的图形
 * 进行图形相似度匹配，
 * 绘制。
 
-# 特点：
+特点：
    * 支持图形学习，实现简单。
    * 样例图形间相似度高时，匹配不准确。
 
-## $1 Unistroke Recognize使用方法：
+# $1 Unistroke Recognize使用方法：
 
-# 将绘制心形的所有的点points传入AddGesture方法中。
 ```markdown
 <script>
+//将绘制心形的所有的点points传入AddGesture方法中。
+//统一图形可以支持传入多份点的数据。
 Recognizer.AddGesture('心形',points)
+//识别图形
+//可以得到图形检测name和score的返回信息。
+var mes ＝ Recognizer.Recognize(points,true)
 </script>
-#统一类型可以支持传入多份点的数据。
-#图形识别
-<script>
-Recognizer.Recognize(points,true)
-</script>
-#可以得到图形检测name和score返回值。
 ```
 ## 实践：
 * 根据给出的图形，涂鸦图形的闯关益智小游戏。
