@@ -1,0 +1,45 @@
+/*base*/
+html, body
+{
+  -webkit-tap-highlight-color: transparent;
+  height: 100%;
+  min-width: 320px;
+  overflow-x: hidden;
+}
+
+body {
+  margin: 0;
+  font-family: "Lucida Grande", "Helvetica Nueue", Arial, 微软雅黑, 冬青黑体, 宋体, sans-serif;
+}
+
+header {
+  padding: 1em;
+  text-align: center;
+  font-size: 2em;
+  color: white;
+}
+a {
+  text-decoration: none;
+}
+.sec{
+    margin:10px;
+    float:left;
+}
+.sec-2{
+}
+canvas { border: 1px solid black; }
+.add{
+    display: block;
+    width: 4rem;
+    height: 2rem;
+    padding: .04rem .12rem;
+    margin-bottom: 0;
+    font-size: .14rem;
+    line-height: 2rem;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    color: #333333;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.75);
+}
+

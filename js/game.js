@@ -1,22 +1,16 @@
 
-    var stage = 'playing'
-    var origin = {};
-    var config = {};
-    var canvasWidth = 640;
-    var canvasHeight = 600;
-    var status = -1;
-    var list = [
-        [0,1],[1,0],[1,0,1],[1,1,0],[0,1,0,1],[1,1,0,1]
-    ];
-    var game = {
-        start:{},
-        end:{}
-    };
+    (function(){
+    var canvasWidth = 300;
+    var canvasHeight = 300;
     var ctx;
-    var score = 0;
-    var curIns = [];
-    var curIndex = 0;
     var canvasOffset = $("canvas").offset();
+    var game = {
+        //游戏状态绘制中
+        drawing: false,
+        //初始坐标
+        origin:{}
+    }
+
     function create() {
       var canvas = document.getElementById("front");
       if (canvas.getContext) {
@@ -54,37 +48,14 @@
     var line;
 
     var Recognizer = new DollarRecognizer();
-    function getCorner(line){
-        var n=0
-        var t=0
-        var lastCorner=line[0]
-        var corners= [line[0]]
-        for (var i=1; i<line.length-2; i++){
 
-            var pt=line[i+1]
-            var d=delta(lastCorner, line[i-1])
-
-            if (len(d)>20 && n>2){
-                ac=delta(line[i-1], pt)
-                if (Math.abs(angle_between(ac, d)) > Math.PI/4){
-                    pt.index=i
-                    corners.push(pt)
-                    lastCorner=pt
-                    n=0
-                    t=0
-                }
-            }
-            n++
-        }
-        return corners;
-    }
     function drawStart(e){
         var pos = getPos(e);
         var curX = pos.X, curY = pos.Y;
         ctx.lineWidth = '20px';
         ctx.strokeStyle = 'rgba(0,0,0,0.2)'
-        origin.x = pos.x;
-        origin.y = pos.y;
+        game.origin.x = pos.x;
+        game.origin.y = pos.y;
         ctx.beginPath();
         game.drawing = true;
         line = [pos]
@@ -94,16 +65,25 @@
         var curX = pos.X, curY = pos.Y;
         if(game.drawing){
             ctx.strokeStyle="rgba(0,0,0,0.2)"
-            ctx.moveTo(origin.x,origin.y);
+            ctx.moveTo(game.origin.x,game.origin.y);
             ctx.lineTo(curX,curY);
             ctx.stroke();
-            origin.x = curX;
-            origin.y = curY;
+            game.origin.x = curX;
+            game.origin.y = curY;
             line.push(pos);
         }
     }
+    //输出学习到的图形信息
     function getNew(){
         var resObj = Recognizer.Unistrokes;
+        var points = resObj[16].Points;
+        var str = ""
+        for(var i=0;i<points.length;i++){
+            console.log(points[i].X)
+            str+= 'new Point('+ Math.floor(points[i].X)+','+Math.floor(points[i].Y)+'),';
+        }
+        console.log(str)
+
     }
     function drawEnd(e){
         var pos = getPos(e);
@@ -111,11 +91,35 @@
         ctx.closePath();
         line.push(pos);
         var result = Recognizer.Recognize(line,true)
-        alert("这是个"+result.Name+"score:"+result.Score);
+        $(".info").text(result.Name);
+        $(".score").text(result.Score)
+        //alert("这是个"+result.Name+"score:"+result.Score);
+        //手动增加一个可识别图形
         //Recognizer.AddGesture('心',line)
-        getNew();
-        ctx.clearRect(0,0,canvasWidth,canvasHeight);
+        //getNew();
+        //fill();
         game.drawing = false;
+        ctx.clearRect(0,0,canvasWidth,canvasHeight);
+    }
+    function fill(){
+        ctx.fillStyle='rgba(255, 0, 0, 0.5)';
+         //绘制几何图形
+        ctx.beginPath()
+        ctx.moveTo(line[0].X, line[0].Y)
+        for (var i=1; i<line.length; i++){
+            ctx.lineTo(line[i].X, line[i].Y)
+        }
+        ctx.lineTo(line[0].X, line[0].Y)
+        ctx.fill()
+        ctx.fillStyle='rgba(255, 255, 0, 0.5)'
+        //绘制几何图形边
+        for (var i=0; i<line.length; i++){
+            ctx.beginPath()
+            ctx.arc(line[i].X, line[i].Y, 4, 0, 2*Math.PI, false)
+            ctx.fill()
+        }
+        ctx.strokeStyle="rgba(0,0,0,0.2)"
+
     }
     $("#front").on('mousedown',function(e){
         drawStart(e)
@@ -138,3 +142,4 @@
         e.preventDefault();
         drawEnd(e);
     });
+    })()

@@ -3,20 +3,30 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
-    <title>canvas图形识别</title>
+    <title>图形识别</title>
+    <link rel="stylesheet" type="text/css" href="../css/style.css" />
 </head>
 <body>
-<style type="text/css">
-    canvas { border: 1px solid black; }
-</style>
-<div>
-    <h3>根据指示画线：</h3>
-    <p>指示：<span class="ins"></span></p>
-    <p>分数：<span class="score">0</span></p>
-    <canvas width="640" height="600" id="front"></canvas>
-</div>
+    <div class="sec sec-1">
+        <h3>根据 $1 Unistroke识别图形</h3>
+        <span>心形，圆，星星，V,X，箭头，对勾</span>
+        <p>适用于复杂的图形的区分</p>
+        <p>图形：<span class="info"></span></p>
+        <p>分数：<span class="score">0</span></p>
+        <canvas width="300" height="300" id="front"></canvas>
+    </div>
+    <div class="sec sec-2">
+        <h3>根据几何图形特性识别</h3>
+        <span>三角形，矩形，横，竖，对勾</span>
+        <p>适用于几何图形的区分</p>
+        <p>图形：<span class="info2"></span></p>
+        <p>分数：</p>
+        <canvas width="300" height="300" id="back"></canvas>
+    </div>
 </body>
 <script src="../js/lib/jquery-3.1.1.js"></script>
 <script src="../js/lib/recognizer.js"></script>
 <script src="../js/game.js"></script>
+<script src="../js/game2.js"></script>
+
 </html>
